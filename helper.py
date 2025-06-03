@@ -48,7 +48,7 @@ def selectData():
     try:
         conn = dbconnection()
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM famous_places")
+        cursor.execute("SELECT * FROM famousPlacesTamilNadu")
         data = cursor.fetchall()
         return data
     except Exception as e:
@@ -60,7 +60,7 @@ def dropTable():
     try:
         conn = dbconnection()
         cursor = conn.cursor()
-        cursor.execute("DROP TABLE famousPlacesIndia")
+        cursor.execute("DROP TABLE famousPlacesTamilNadu")
         conn.commit()
         return "Table dropped successfully"
     except Exception as e:
@@ -78,7 +78,7 @@ def CreateTable():
             except Exception as e :
                 print("Table does not exist, Continue to create table")
             cursor = conn.cursor()    
-            cursor.execute("CREATE TABLE famousPlacesIndia (id SERIAL PRIMARY KEY,place TEXT NOT NULL,description TEXT,vectors VECTOR(3072));")
+            cursor.execute("CREATE TABLE famousPlacesTamilNadu (id SERIAL PRIMARY KEY,place TEXT NOT NULL,description TEXT,vectors VECTOR(3072));")
             conn.commit()
             return "Table created successfully"
         else:
@@ -110,7 +110,7 @@ def insert_into_database():
                     place = row['Place']
                     description = row['Description']
                     vector = get_embedding(description)
-                    query = """INSERT INTO famousPlacesIndia (place, description, vectors) values (%s ,%s, %s)"""
+                    query = """INSERT INTO famousPlacesTamilNadu (place, description, vectors) values (%s ,%s, %s)"""
                     cursor.execute(query, (place, description, vector))
                     conn.commit()
                     print(f"{index}th Row data inserted successfully")
@@ -124,5 +124,3 @@ def insert_into_database():
     except Exception as e:
         print("Error in inserting data:", str(e))
         return None
-
-print(insert_into_database())
